@@ -24,6 +24,7 @@ class App extends Component {
 				return res.json();
 			})
 			.then(data => {
+        console.log(data)
 				this.setState({ starwarsChars: data.results });
 			})
 			.catch(err => {
@@ -38,9 +39,11 @@ class App extends Component {
 
 				<div>
 					
-					{this.state.starwarsChars.map(swcharacter => {
-						return <Character character={swcharacter} />;
-					})}
+					{this.state.starwarsChars.map((swcharacter,index) => {
+            console.log(swcharacter)
+						return <Character character={swcharacter} key={index} />;
+          }
+          )}
 				</div>
 			</div>
 		);
