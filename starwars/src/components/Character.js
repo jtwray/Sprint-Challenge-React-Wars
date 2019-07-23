@@ -24,10 +24,10 @@ function Character(props) {
 					<strong>Species:</strong> {props.character.species}
                 </p>
                 <p>
-					<strong>Rides:</strong> <img src={props.character.starships[0]} alt={props.character.vehicles[-1]}></img>
+					<strong>Rides:</strong> <a href={props.character.starships[0]} alt={props.character.vehicles[-1]}></a>
                 </p>
                 <p>
-					<strong>img:</strong> <img src={props.character.url} alt=""></img>
+					<strong>img:</strong> <a href={props.character.url} alt=""></a>
 				</p>
 			</div>
 		</div>
