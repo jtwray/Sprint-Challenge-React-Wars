@@ -14,6 +14,8 @@ const App = () => {
       <h1 className="Header">React Wars</h1>
     </div>
   );
-}
+
+
+
 
 export default App;
