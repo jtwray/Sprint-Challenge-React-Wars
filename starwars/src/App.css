@@ -33,25 +33,7 @@
 }
 
 /* write your parent styles in here for your App.js */
-.character-card {
-	background: #fff;
-	border-radius: 2px;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-evenly;
-	height: auto;
-	margin: 1rem auto;
-	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-	width: auto;
-	max-width: 700px;
-	opacity: 0.85;
-	text-shadow: 3px 2px 7px #702f1394;
-	/* margin: 10rem; */
-}
 
-.character-info {
-	padding-left: 24px;
-}
 
 body {
 	margin: auto;
@@ -65,9 +47,5 @@ body {
 	background-attachment: fixed;
 }
 
-.character-info > p {
-	display: flex;
-}
-h4 {
-	margin-right: 15%;
-}
+
+
