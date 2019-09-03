@@ -1,15 +1,22 @@
-import React, {useState} from "react";
+import React from "react";
 import styled from "styled-components";
-import Luke from "../static/images/Luke_skywalker (1).jpg";
+import R2D2 from "../static/images/R2D2.jpeg";
+import C3PO from "../static/images/C3PO.jpeg";
 
-export function Character(props) {
-	const [name, setName] = useState({firstName: "", LastName: ""});
 
+export function Character( props ) {
+	
+const picReference=`${Array.from(`${props.character.name}`.split(" "))[0]}`;
+console.log(picReference,`{${picReference}}`)
 	return (
 		<CharacterCard>
 			<Header>{props.character.name}</Header>
 			<CharacterInfo>
-				<CharacterImage src={Luke} alt="luke" />
+				<CharacterImage src={(props.character.name) === ("C-3PO") ? (`${C3PO}`) 
+				: (props.character.name )===("R2-D2")  ? `${R2D2}` 
+				: props.images.filter((x)=>{return(x.includes(picReference))})}
+								alt={picReference} 
+				/>
 
 				<P>
 					<strong>Height:</strong>
@@ -47,11 +54,11 @@ export function Character(props) {
 				<P>
 					<strong>Rides:</strong>
 					{!props.character.vehicles[-1]
-						? "🛴"
-						: `vehicles${props.character.vehicles[-1]}`}
+						? "vehicles: 🛴 "
+						:`vehicles ${props.character.vehicles[-1]}`}
 					{!props.character.starships[0]
-						? "🛸"
-						: `starships:${props.character.starships[0]}`}
+						? "starships:🛸"
+						:`starships:🛸 ${props.character.starships[0]} `}
 				</P>
 				<P>
 					<strong>img:</strong>
@@ -62,14 +69,16 @@ export function Character(props) {
 		</CharacterCard>
 	);
 }
-const P = styled.p`
+const P=styled.p`
 	display: flex;
+	flex-wrap: wrap;
+	text-align: justify;
 `;
-const CharacterInfo = styled.div`
+const CharacterInfo=styled.div`
 	padding-left: 24px;
 	padding-bottom:24px;
 `;
-const CharacterImage = styled.img`
+const CharacterImage=styled.img`
 	position: relative;
 	float: right;
 	border: tan 5px solid;
@@ -80,7 +89,7 @@ const CharacterImage = styled.img`
 	right: 33px;
 	border-radius: 50px;
 `;
-const CharacterCard = styled.div`
+const CharacterCard=styled.div`
 	background: #fff;
 	border-radius: 20px;
 	display: flex;
@@ -90,14 +99,14 @@ const CharacterCard = styled.div`
 	height: auto;
 	margin: 1rem;
 	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-	width: auto;
+	width: 300px;
 	max-width: 500px;
 	opacity: 0.85;
 	text-shadow: 3px 2px 7px #702f1394;
 	box-shadow: inset -11px -11px 20px 3px black;
 `;
 
-const Header = styled.header`
+const Header=styled.header`
 	cursor: pointer;
 	font-size: 2rem;
 	border-radius: 10px;

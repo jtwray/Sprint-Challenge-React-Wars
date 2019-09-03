@@ -2,14 +2,23 @@ import React, {useState, useEffect, useRef} from "react";
 import axios from "axios";
 import styled from "styled-components";
 import {Character} from "./components/Character";
-import {Carousel} from "./components/Carousel";
-import c3p0 from "./static/images/c3p0.jpg";
-import Luke from "./static/images/Luke_skywalker (1).jpg";
-import R2D2 from "./static/images/R2D2.jpeg"
+
+
 
 import "./App.css";
 
-export const App = () => {
+
+function importAll(r) {
+	return r.keys().map(r);
+  }
+  
+const images=importAll( require.context( './static/images/', false, /\.(jpe?g|jpg|jpeg)$/ ) );
+
+console.log( images ) 
+
+export const App=() => {
+	
+	
 	const [characters, setCharacters] = useState([]);
 
 	useEffect(() => {
@@ -24,26 +33,25 @@ export const App = () => {
 				console.error();
 			});
 	}, []);
+
 	const [character, setCharacter] = useState(characters[0] && characters[0]);
 
-	const updateCharacter = (x) => {
-		x && setCharacter(x);
-	};
 
 	const savedCharacters = useRef("");
 	useEffect(() => {
 		savedCharacters.current = characters;
-	});
+	},[characters]);
 
 	const savedCharacter = useRef({});
 	useEffect(() => {
 		characters[0] && (savedCharacter.current = characters[0]);
-	});
+	},[]);
 
 	console.log(savedCharacter.current);
 
 	console.log(savedCharacters.current);
 	useEffect(() => {
+		
 		characters[0] && setCharacter(characters[0]);
 	}, [characters[0]]);
 
@@ -68,11 +76,11 @@ export const App = () => {
 	const InitialState = 0;
 	let [charactersIndex, setCharactersIndex] = useState(InitialState);
 	const prevCard = () => {
-		setCharactersIndex((charactersIndex -= 1));
+		setCharactersIndex((charactersIndex =>charactersIndex+ 1));
 		console.log(charactersIndex);
 	};
 	const nextCard = () => {
-		setCharactersIndex((charactersIndex += 1));
+		setCharactersIndex((charactersIndex =>charactersIndex- 1));
 		console.log(charactersIndex);
 	};
 
@@ -82,15 +90,7 @@ export const App = () => {
 	// Fetch characters from the star wars api in an effect hook. Remember, anytime you have a
 	// side effect in a component, you want to think about which state and/or props it should
 	// sync up with, if any.
-	const [heroImages, setHeroImages] = useState([]);
-	const assignImages = () => {
-		// charactersIndex==1? characters[1].heroImage==heroImage[1]:"";
 
-		const newHeroes = [...heroImages, Luke, c3p0, R2D2];
-
-		return console.log(newHeroes);
-	};
-	assignImages();
 	return (
 		<div className="App">
 			<HeaderContainer>
@@ -98,7 +98,12 @@ export const App = () => {
 					onClick={(e) => {
 						prevCard();
 					}}>
-					👈
+					<span role="img" 
+						  aria-label="hand pointing left. 
+						  Clicking this emoji will advance
+						  the next carousel Image from the
+						  left into the screen.">  👈
+					</span>
 				</Left>
 				<Header>React Wars</Header>
 				<Right
@@ -106,7 +111,12 @@ export const App = () => {
 						nextCard();
 					}}>
 					{" "}
-					👉
+					<span role="img"
+						  aria-label="hand pointing right.
+						  Clicking this emoji will advance
+						  the next carousel Image from the
+						  right into the screen.">  👉
+					</span>
 				</Right>
 			</HeaderContainer>
 			<CardsSlider>
@@ -116,9 +126,10 @@ export const App = () => {
 							(100 / characters.length)}%)`,
 					}}>
 					{characters ? (
-						characters.map((character, i) => {
+						characters.map( ( character, i ) => {
 							return (
-								<Character
+								<Character charpic={`${images}`.includes(`${character.name}` )? `${images[`${character.name}`.indexOf]}`:null}
+									images={images}
 									character={character}
 									key={`${character.toString()}${i}`}
 								/>
