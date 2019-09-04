@@ -5,25 +5,65 @@
 	align-items: center;
 	justify-content: space-between;
 	position: relative;
-	padding: 2rem;
+	padding: 1rem;
 }
 
 .Header {
 	color: #443e3e;
-	text-shadow: 1px 1px 5px #fff;
+	
 	position: fixed;
 	right: 35%;
 	top: 1%;
 	z-index: 3;
-	text-shadow: 5px 5px 3px #fff, 4.9px 4.9px 3px #c78352,
-		4.8px 4.8px 3px #c78352, 4.7px 4.7px 3px #c78352, 4.6px 4.6px 3px #c78352,
-		4.5px 4.5px 3px #c78352, 4.4px 4.4px 3px #c78352, 4.3px 4.3px 3px #c78352,
-		4.2px 4.2px 3px #c78352, 4.1px 4.1px 3px #c78352, 4px 4px 3px #c78352,
-		3.9px 3.9px 3px #c78352, 3.5px 3.5px 3px #c78352, 3.3px 3.3px 3px #c78352,
-		3.2px 3.2px 3px #c78352, 3.7px 3.7px 3px #c78352, 3.6px 3.6px 3px #c78352,
-		3.5px 3.5px 3px #c78352, 3.4px 3.4px 3px #c78352, 3.3px 3.3px 3px #c78352,
-		3.2px 3.2px 3px #c78352, 3.1px 3.1px 3px #c78352, 3px 3px 3px #c78352,
-		2.9px 2.9px 3px #c78352;
+	text-shadow:	
+	0.1px 0.1px 3px  #AAE,
+	0.2px 0.2px 3px  #AAD,
+	0.3px 0.3px 3px  #AAC,
+	0.4px 0.4px 3px  #AAB,
+	0.5px 0.5px 3px  #AAA,
+	0.6px 0.6px 3px  #AA9,
+	0.7px 0.7px 3px  #AA8,
+	0.8px 0.8px 3px  #AA7,
+	0.9px 0.9px 3px  #AA6,
+	0.0px 0.0px 3px  #AA5,
+	1.1px 1.1px 3px  #AA4,
+	1.2px 1.2px 3px  #AA3,
+	1.3px 1.3px 3px  #AA2,
+	1.4px 1.4px 3px  #AA1,
+	1.5px 1.5px 3px  #AA0,
+	1.6px 1.6px 3px  #ABF,
+	1.7px 1.7px 3px  #ABE,
+	1.8px 1.8px 3px  #ABD,
+	1.9px 1.9px 3px  #ABC,
+	2.5px 2.5px 3px  #ABB,
+	2.6px 2.6px 3px  #ABA,
+	2.7px 2.7px 3px  #AB9,
+	2.8px 2.8px 3px  #AB8,
+	2.9px 2.9px 3px  #AB6,
+	3.0px 3.0px 3px  #AB5,
+	3px 3px 3px #c78352,
+	3.1px 3.1px 3px #c78352,
+	3.2px 3.2px 3px #c78352,
+	3.2px 3.2px 3px #c78352,
+	3.3px 3.3px 3px #c78352,
+	3.3px 3.3px 3px #c78352,
+	3.4px 3.4px 3px #c78352,
+	3.5px 3.5px 3px #c78352,
+	3.5px 3.5px 3px #c78352,
+	3.6px 3.6px 3px #c78352,
+	3.7px 3.7px 3px #c78352,
+	3.9px 3.9px 3px #c78352,
+	4px 4px 3px #c78352,
+	4.1px 4.1px 3px #c78352,
+	4.2px 4.2px 3px #c78352,
+	4.3px 4.3px 3px #c78352,
+	4.4px 4.4px 3px #c78352,
+	4.5px 4.5px 3px #c78352,
+	4.6px 4.6px 3px #c78352,
+	4.7px 4.7px 3px #c78352,
+	4.8px 4.8px 3px #c78352,
+	4.9px 4.9px 3px #c78352,
+	5px 5px 3px #fff,
 }
 
 .class-list {
@@ -33,25 +73,6 @@
 }
 
 /* write your parent styles in here for your App.js */
-.character-card {
-	background: #fff;
-	border-radius: 2px;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-evenly;
-	height: auto;
-	margin: 1rem auto;
-	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-	width: auto;
-	max-width: 700px;
-	opacity: 0.85;
-	text-shadow: 3px 2px 7px #702f1394;
-	/* margin: 10rem; */
-}
-
-.character-info {
-	padding-left: 24px;
-}
 
 body {
 	margin: auto;
@@ -63,11 +84,4 @@ body {
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-attachment: fixed;
-}
-
-.character-info > p {
-	display: flex;
-}
-h4 {
-	margin-right: 15%;
 }
