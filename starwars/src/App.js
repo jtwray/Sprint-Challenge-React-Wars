@@ -1,182 +1,166 @@
-import React, {useState, useEffect, useRef} from "react";
-import axios from "axios";
-import styled from "styled-components";
-import {Character} from "./components/Character";
+import React, { useState, useEffect, useRef } from 'react'
+import axios from 'axios'
+import styled from 'styled-components'
+import { Character } from './components/Character'
+import './App.css'
+
+function importAll (r) {
+  return r.keys().map(r)
+}
+const images = importAll(
+  require.context('./static/images/', false, /\.(jpe?g|jpg|jpeg)$/)
+)
+console.log({ images })
+
+export const App = () => {
+  const starwarsApi = 'https://swapi.co/api/people/'
+
+  const InitialCard = 0
+
+  const [characters, setCharacters] = useState([])
+//   const [character, setCharacter] = useState(characters[0] && characters[0])
+  const [charactersIndex, setCharactersIndex] = useState(InitialCard)
+
+  const savedCharacter = useRef({})
+  const savedCharacters = useRef([])
 
 
+  const currentChar = savedCharacters.current[charactersIndex]
+  const currentCharsRef = savedCharacters.current
 
-import "./App.css";
+  useEffect(() => {
+    axios
+      .get(`${starwarsApi}`)
+      .then(res => setCharacters(res.data.results))
+      .catch(_error => console.error(_error))
+  }, [])
 
+  useEffect(() => {
+    savedCharacters.current = characters
+	console.log('savedCharacters:', savedCharacters.current)
+  }, [characters])
 
-function importAll(r) {
-	return r.keys().map(r);
-  }
-  
-const images=importAll( require.context( './static/images/', false, /\.(jpe?g|jpg|jpeg)$/ ) );
+  const prevCard = () => {
+    setCharactersIndex(charactersIndex => charactersIndex-1)
+    console.log(charactersIndex)
+  };
 
-console.log( images ) 
+  const nextCard = () => {
+    setCharactersIndex(charactersIndex => charactersIndex+1)
+    console.log(charactersIndex)
+  };
 
-export const App=() => {
-	
-	
-	const [characters, setCharacters] = useState([]);
+  console.log(
+    'savedCharacter.current:',
+    savedCharacter,
+    { currentCharsRef },
+    { currentChar }
+  )
 
-	useEffect(() => {
-		axios
-			.get("https://swapi.co/api/people/")
+  // Try to think through what state you'll need for this app before starting. Then build out
+  // the state properties here.
 
-			.then((res) => {
-				setCharacters(res.data.results);
-			})
+  // Fetch characters from the star wars api in an effect hook. Remember, anytime you have a
+  // side effect in a component, you want to think about which state and/or props it should
+  // sync up with, if any.
 
-			.catch((error) => {
-				console.error();
-			});
-	}, []);
-
-	const [character, setCharacter] = useState(characters[0] && characters[0]);
-
-
-	const savedCharacters = useRef("");
-	useEffect(() => {
-		savedCharacters.current = characters;
-	},[characters]);
-
-	const savedCharacter = useRef({});
-	useEffect(() => {
-		characters[0] && (savedCharacter.current = characters[0]);
-	},[]);
-
-	console.log(savedCharacter.current);
-
-	console.log(savedCharacters.current);
-	useEffect(() => {
-		
-		characters[0] && setCharacter(characters[0]);
-	}, [characters[0]]);
-
-	console.log(
-		"characters:",
-		characters,
-		"characters[0]:",
-		characters[0],
-		"character:",
-		`'${character}'`,
-		"character.name:",
-		`'${character && character}'`,
-		"Object.keys( characters ):",
-		Object.keys(characters),
-		"characters[0]&&characters[0].name:",
-		characters[0] && characters[0].name
-	);
-
-	const charactersRef = useRef(null);
-	charactersRef.current = characters;
-
-	const InitialState = 0;
-	let [charactersIndex, setCharactersIndex] = useState(InitialState);
-	const prevCard = () => {
-		setCharactersIndex((charactersIndex =>charactersIndex+ 1));
-		console.log(charactersIndex);
-	};
-	const nextCard = () => {
-		setCharactersIndex((charactersIndex =>charactersIndex- 1));
-		console.log(charactersIndex);
-	};
-
-	// Try to think through what state you'll need for this app before starting. Then build out
-	// the state properties here.
-
-	// Fetch characters from the star wars api in an effect hook. Remember, anytime you have a
-	// side effect in a component, you want to think about which state and/or props it should
-	// sync up with, if any.
-
-	return (
-		<div className="App">
-			<HeaderContainer>
-				<Left
-					onClick={(e) => {
-						prevCard();
-					}}>
-					<span role="img" 
-						  aria-label="hand pointing left. 
+  return (
+    <div className='App'>
+      <HeaderContainer>
+        <Left
+          onClick={_e => {
+            prevCard()
+          }}
+        >
+          <span
+            role='img'
+            aria-label='hand pointing left.
 						  Clicking this emoji will advance
 						  the next carousel Image from the
-						  left into the screen.">  👈
-					</span>
-				</Left>
-				<Header>React Wars</Header>
-				<Right
-					onClick={(e) => {
-						nextCard();
-					}}>
-					{" "}
-					<span role="img"
-						  aria-label="hand pointing right.
+						  left into the screen.'
+          >👈
+          </span>
+        </Left>
+        <Header>React Wars</Header>
+        <Right
+          onClick={_e => {
+            nextCard()
+          }}
+        >
+          <span
+            role='img'
+            aria-label='hand pointing right.
 						  Clicking this emoji will advance
 						  the next carousel Image from the
-						  right into the screen.">  👉
-					</span>
-				</Right>
-			</HeaderContainer>
-			<CardsSlider>
-				<CardsSliderWrapper
-					style={{
-						transform: `translateX(${charactersIndex *
-							(100 / characters.length)}%)`,
-					}}>
-					{characters ? (
-						characters.map( ( character, i ) => {
-							return (
-								<Character charpic={`${images}`.includes(`${character.name}` )? `${images[`${character.name}`.indexOf]}`:null}
-									images={images}
-									character={character}
-									key={`${character.toString()}${i}`}
-								/>
-							);
-						})
-					) : (
-						<div>Loading...</div>
-					)}
-				</CardsSliderWrapper>
-			</CardsSlider>
-		</div>
-	);
+						  right into the screen.'
+          >👉
+          </span>
+        </Right>
+      </HeaderContainer>
+      <CardsSlider>
+        <CardsSliderWrapper
+          style={{
+            transform: `translateX(-${charactersIndex * (100 / characters.length)}%)`
+          }}
+        >
+          {characters ? (
+            characters.map((character, i) => {
+              return (
+                <Character
+                  starwarsApi={starwarsApi}
+                  charpic={
+                    `${images}`.includes(`${character.name}`)
+                      ? `${images[`${character.name}`.indexOf]}`
+                      : null
+                  }
+                  images={images}
+                  character={character}
+                  key={`${character.toString()}${i}`}
+                />
+              )
+            })
+          ) : (
+            <div>Loading...</div>
+          )}
+        </CardsSliderWrapper>
+      </CardsSlider>
+    </div>
+  )
 };
 
 const HeaderContainer = styled.div`
-	display: flex;
-	padding: 1rem;
-	align-content: center;
-	display: flex;
-	font-size: 4rem;
-`;
+  display: flex;
+  padding: 1rem;
+  align-content: center;
+  display: flex;
+  font-size: 4rem;
+`
 const Right = styled.div`
-	flex: auto;
-	border-radius: 54px;
-	background-color: white;
-	box-shadow: inset -7px -9px 15px 0px #000002;
-	text-shadow: 1px -1px 0px, 1px 2px 0 black;
-	padding: inherit;
-`;
+  flex: auto;
+  border-radius: 54px;
+  background-color: white;
+  box-shadow: inset -7px -9px 15px 0px #000002;
+  text-shadow: 1px -1px 0px, 1px 2px 0 black;
+  padding: inherit;
+`
 const Left = styled.div`
-	flex: auto;
-	text-align: center;
-	display: flex;
-	border-radius: 54px;
-	background-color: white;
-	box-shadow: inset -7px -9px 15px 0px #000002;
-	text-shadow: 1px -1px 0px, 1px 2px 0 black;
-	padding: inherit;
-`;
+  flex: auto;
+  text-align: center;
+  display: flex;
+  border-radius: 54px;
+  background-color: white;
+  box-shadow: inset -7px -9px 15px 0px #000002;
+  text-shadow: 1px -1px 0px, 1px 2px 0 black;
+  padding: inherit;
+`
 const CardsSlider = styled.div`
-	display: flex;
-	position: relative;
-`;
+  display: flex;
+  position: relative;
+`
 const CardsSliderWrapper = styled.div`
-	display: flex;
-	position: absolute;
-`;
+  display: flex;
+  position: absolute;
+`
 
 const Header = styled.header`
 	cursor: pointer;
@@ -253,4 +237,4 @@ const Header = styled.header`
     margin: 2rem;
 
 }
-`;
+`

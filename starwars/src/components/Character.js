@@ -1,84 +1,94 @@
-import React from "react";
-import styled from "styled-components";
-import R2D2 from "../static/images/R2D2.jpeg";
-import C3PO from "../static/images/C3PO.jpeg";
+import React, { useState, useEffect } from 'react'
+import styled from 'styled-components'
+import R2D2 from '../static/images/R2D2.jpeg'
+import C3PO from '../static/images/C3PO.jpeg'
+import Axios from 'axios'
 
+export function Character (props) {
+  const [rides, setRides] = useState('')
 
-export function Character( props ) {
-	
-const picReference=`${Array.from(`${props.character.name}`.split(" "))[0]}`;
-console.log(picReference,`{${picReference}}`)
-	return (
-		<CharacterCard>
-			<Header>{props.character.name}</Header>
-			<CharacterInfo>
-				<CharacterImage src={(props.character.name) === ("C-3PO") ? (`${C3PO}`) 
-				: (props.character.name )===("R2-D2")  ? `${R2D2}` 
-				: props.images.filter((x)=>{return(x.includes(picReference))})}
-								alt={picReference} 
-				/>
+  useEffect(() => {
+    props.character.rides &&
+Axios.get(props.character.rides)
+  .then(res => setRides(res),
+    console.log('rides:', rides))
+  }, [])
+  const picReference = `${Array.from(`${props.character.name}`.split(' '))[0]}`
+  console.log(picReference, `{${picReference}}`)
+  return (
+    <CharacterCard>
+      <Header>{props.character.name}</Header>
+      <CharacterInfo>
+        <CharacterImage
+          src={
+            (props.character.name) === ('C-3PO') ? (`${C3PO}`)
+              : (props.character.name) === ('R2-D2') ? `${R2D2}`
+                : props.images.filter((x) => { return (x.includes(picReference)) })
+          }
+          alt={picReference}
+        />
 
-				<P>
-					<strong>Height:</strong>
-					{props.character.height}
-				</P>
-				<P>
-					<strong>mass:</strong>
-					{props.character.mass}kg
-				</P>
+        <P>
+          <strong>Height:</strong>
+          {props.character.height}
+        </P>
+        <P>
+          <strong>mass:</strong>
+          {props.character.mass}kg
+        </P>
 
-				<P>
-					<strong>Hair:</strong>
-					{props.character.hair_color}
-				</P>
-				<P>
-					<strong>Skin:</strong>
-					{props.character.skin_color}
-				</P>
-				<P>
-					<strong>Eyes:</strong>
-					{props.character.eye_color}
-				</P>
-				<P>
-					<strong>DOB:</strong> {props.character.birth_year}
-				</P>
-				<P>
-					<strong>Gender:</strong> {props.character.gender}
-				</P>
-				<P>
-					<strong>HomeWorld:</strong> {props.character.homeworld}
-				</P>
-				<P>
-					<strong>Species:</strong> {props.character.species}
-				</P>
-				<P>
-					<strong>Rides:</strong>
-					{!props.character.vehicles[-1]
-						? "vehicles: 🛴 "
-						:`vehicles ${props.character.vehicles[-1]}`}
-					{!props.character.starships[0]
-						? "starships:🛸"
-						:`starships:🛸 ${props.character.starships[0]} `}
-				</P>
-				<P>
-					<strong>img:</strong>
+        <P>
+          <strong>Hair:</strong>
+          {props.character.hair_color}
+        </P>
+        <P>
+          <strong>Skin:</strong>
+          {props.character.skin_color}
+        </P>
+        <P>
+          <strong>Eyes:</strong>
+          {props.character.eye_color}
+        </P>
+        <P>
+          <strong>DOB:</strong> {props.character.birth_year}
+        </P>
+        <P>
+          <strong>Gender:</strong> {props.character.gender}
+        </P>
+        <P>
+          <strong>HomeWorld:</strong> {props.character.homeworld}
+        </P>
+        <P>
+          <strong>Species:</strong> {props.character.species}
+        </P>
+        <P>
+          <strong>Rides:</strong>
+          {!props.character.vehicles[-1]
+            ? 'vehicles: 🛴 '
+            : `vehicles ${props.character.vehicles[-1]}`}
+          {!props.character.starships[0]
+            ? 'starships:🛸'
+            : `starships:🛸 ${props.character.starships[0]} `}
+        </P>
+        <P>
+          <strong>img:</strong>
 
-					{props.character.url}
-				</P>
-			</CharacterInfo>
-		</CharacterCard>
-	);
+          {props.character.url}
+        </P>
+      </CharacterInfo>
+    </CharacterCard>
+  )
 }
-const P=styled.p`
+const P = styled.p`
 	display: flex;
 	flex-wrap: wrap;
 	text-align: justify;
-`;
-const CharacterInfo=styled.div`
+`
+const CharacterInfo = styled.div`
 	padding-left: 24px;
 	padding-bottom:24px;
-`;
-const CharacterImage=styled.img`
+`
+const CharacterImage = styled.img`
 	position: relative;
 	float: right;
 	border: tan 5px solid;
@@ -88,8 +98,8 @@ const CharacterImage=styled.img`
 	box-shadow: 1px 3px 10px 1px #7f7f6b;
 	right: 33px;
 	border-radius: 50px;
-`;
-const CharacterCard=styled.div`
+`
+const CharacterCard = styled.div`
 	background: #fff;
 	border-radius: 20px;
 	display: flex;
@@ -104,9 +114,9 @@ const CharacterCard=styled.div`
 	opacity: 0.85;
 	text-shadow: 3px 2px 7px #702f1394;
 	box-shadow: inset -11px -11px 20px 3px black;
-`;
+`
 
-const Header=styled.header`
+const Header = styled.header`
 	cursor: pointer;
 	font-size: 2rem;
 	border-radius: 10px;
@@ -170,4 +180,4 @@ const Header=styled.header`
 		box-shadow: inset -13px -11px 17px 6px black;
 	    padding: 1rem;
 	};
-`;
+`
