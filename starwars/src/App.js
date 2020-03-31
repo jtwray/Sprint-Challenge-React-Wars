@@ -100,7 +100,8 @@ export const App = () => {
       <CardsSlider>
         <CardsSliderWrapper
           style={{
-            transform: `translateX(-${charactersIndex * (100 / characters.length)}%)`
+            transform: `translateX(-${charactersIndex * (100 / characters.length)}%)`,
+			transition: `all 0.5s ease-in-out 0s`
           }}
         >
           {characters ? (
